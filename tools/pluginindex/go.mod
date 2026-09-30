@@ -4,11 +4,12 @@ go 1.26.6
 
 require (
 	github.com/QuantumNous/new-api v0.0.0
-	github.com/stretchr/testify v1.11.1
+	github.com/stretchr/testify v1.12.1
 )
 
 require (
 	github.com/Azure/go-ntlmssp v0.1.1 // indirect
+	github.com/Calcium-Ion/moejs v0.1.0-alpha.3 // indirect
 	github.com/QuantumNous/new-api/relaykit v0.0.0 // indirect
 	github.com/abema/go-mp4 v1.4.1 // indirect
 	github.com/boombuler/barcode v1.1.0 // indirect

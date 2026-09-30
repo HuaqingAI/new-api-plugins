@@ -793,6 +793,7 @@
           "name": "openai_image",
           "models": [
             "doubao-seedream-5-0-pro-260628",
+            "doubao-seedream-5-0-flash-260915",
             "doubao-seedream-5-0-lite-260128",
             "doubao-seedream-5-0-260128",
             "doubao-seedream-4-5-251128",
@@ -1335,10 +1336,7 @@
         {
           "models": [
             "doubao-seedream-5-0-pro-260628",
-            "doubao-seedream-5-0-lite-260128",
-            "doubao-seedream-5-0-260128",
-            "doubao-seedream-4-5-251128",
-            "doubao-seedream-4-0-250828"
+            "doubao-seedream-5-0-flash-260915"
           ],
           "schema": {
             "images_above_1_5k": {
@@ -1420,21 +1418,162 @@
               }
             },
             {
-              "label": "2K · 4 张组图",
-              "facts": {
-                "images_above_1_5k": 4,
-                "images_up_to_1_5k": 0,
-                "input_images": 0,
-                "layer_decomposition": false
-              }
-            },
-            {
               "label": "图层拆分 · 2K 底图 + 4 层 1.5K",
               "facts": {
                 "images_above_1_5k": 1,
                 "images_up_to_1_5k": 4,
                 "input_images": 1,
                 "layer_decomposition": true
+              }
+            }
+          ]
+        },
+        {
+          "models": [
+            "doubao-seedream-5-0-lite-260128",
+            "doubao-seedream-5-0-260128",
+            "doubao-seedream-4-5-251128"
+          ],
+          "schema": {
+            "images_above_1_5k": {
+              "type": "number",
+              "unit": "count",
+              "unitLabel": {
+                "en": "image",
+                "fr": "image",
+                "ja": "枚",
+                "ru": "изображение",
+                "vi": "ảnh",
+                "zh": "张",
+                "zh-TW": "張"
+              },
+              "description": {
+                "en": "Image generation unit price",
+                "zh": "图片生成单价"
+              }
+            },
+            "input_images": {
+              "type": "number",
+              "unit": "count",
+              "unitLabel": {
+                "en": "image",
+                "fr": "image",
+                "ja": "枚",
+                "ru": "изображение",
+                "vi": "ảnh",
+                "zh": "张",
+                "zh-TW": "張"
+              },
+              "description": {
+                "en": "Input image unit price",
+                "zh": "输入图片单价"
+              }
+            }
+          },
+          "examples": [
+            {
+              "label": "2K · 1 张",
+              "facts": {
+                "images_above_1_5k": 1,
+                "input_images": 0
+              }
+            },
+            {
+              "label": "2K · 1 张 · 2 张参考图",
+              "facts": {
+                "images_above_1_5k": 1,
+                "input_images": 2
+              }
+            },
+            {
+              "label": "2K · 4 张组图",
+              "facts": {
+                "images_above_1_5k": 4,
+                "input_images": 0
+              }
+            }
+          ]
+        },
+        {
+          "models": [
+            "doubao-seedream-4-0-250828"
+          ],
+          "schema": {
+            "images_above_1_5k": {
+              "type": "number",
+              "unit": "count",
+              "unitLabel": {
+                "en": "image",
+                "fr": "image",
+                "ja": "枚",
+                "ru": "изображение",
+                "vi": "ảnh",
+                "zh": "张",
+                "zh-TW": "張"
+              },
+              "description": {
+                "en": "Image generation unit price (above 1.5K)",
+                "zh": "图片生成单价（1.5K 以上）"
+              }
+            },
+            "images_up_to_1_5k": {
+              "type": "number",
+              "unit": "count",
+              "unitLabel": {
+                "en": "image",
+                "fr": "image",
+                "ja": "枚",
+                "ru": "изображение",
+                "vi": "ảnh",
+                "zh": "张",
+                "zh-TW": "張"
+              },
+              "description": {
+                "en": "Image generation unit price (1.5K and below)",
+                "zh": "图片生成单价（1.5K 及以下）"
+              }
+            },
+            "input_images": {
+              "type": "number",
+              "unit": "count",
+              "unitLabel": {
+                "en": "image",
+                "fr": "image",
+                "ja": "枚",
+                "ru": "изображение",
+                "vi": "ảnh",
+                "zh": "张",
+                "zh-TW": "張"
+              },
+              "description": {
+                "en": "Input image unit price",
+                "zh": "输入图片单价"
+              }
+            }
+          },
+          "examples": [
+            {
+              "label": "2K · 1 张",
+              "facts": {
+                "images_above_1_5k": 1,
+                "images_up_to_1_5k": 0,
+                "input_images": 0
+              }
+            },
+            {
+              "label": "1K · 1 张 · 2 张参考图",
+              "facts": {
+                "images_above_1_5k": 0,
+                "images_up_to_1_5k": 1,
+                "input_images": 2
+              }
+            },
+            {
+              "label": "2K · 4 张组图",
+              "facts": {
+                "images_above_1_5k": 4,
+                "images_up_to_1_5k": 0,
+                "input_images": 0
               }
             }
           ]
@@ -1454,13 +1593,21 @@
         "doubao-seedance-2-0-mini-260615",
         "doubao-seedance-2-5-260628",
         "doubao-seedream-5-0-pro-260628",
+        "doubao-seedream-5-0-flash-260915",
         "doubao-seedream-5-0-lite-260128",
         "doubao-seedream-5-0-260128",
         "doubao-seedream-4-5-251128",
         "doubao-seedream-4-0-250828"
       ],
-      "latest": "1.2.0",
+      "latest": "1.2.1",
       "versions": [
+        {
+          "version": "1.2.1",
+          "path": "plugins/tasks/doubao/1.2.1/plugin.js",
+          "sha256": "c6a4bf535f1506f10ac7e174155504435514e834c11becdc457ce5422b6dd98f",
+          "minApiVersion": 1,
+          "kind": "task"
+        },
         {
           "version": "1.2.0",
           "path": "plugins/tasks/doubao/1.2.0/plugin.js",

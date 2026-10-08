@@ -97,6 +97,16 @@ const IMAGE_MODELS = {
     fastPromptMode: true,
   },
 };
+// Agent Plan exposes Seedream through these aliases instead of the dated
+// standard Ark endpoint ID. Keep the same Seedream 5.0 Pro capability profile
+// while routing these public names to the Agent Plan image endpoint below.
+const AGENT_PLAN_IMAGE_MODELS = ["doubao-seedream-5-0-pro", "doubao-seedream-5.0-pro"];
+for (const model of AGENT_PLAN_IMAGE_MODELS) {
+  IMAGE_MODELS[model] = {
+    ...IMAGE_MODELS["doubao-seedream-5-0-pro-260628"],
+    agentPlan: true,
+  };
+}
 const IMAGE_RESOLUTIONS = ["1K", "1.5K", "2K", "3K", "4K"];
 // Square pixel area of each preset, used only for the submit-time tier estimate.
 const IMAGE_PRESET_PIXELS = { "1K": 1048576, "1.5K": 2359296, "2K": 4194304, "3K": 9437184, "4K": 16777216 };
@@ -334,6 +344,32 @@ function trimmed(value) {
 // prefixed native routes; Ark itself serves the unprefixed paths.
 function apiRoot(ctx) {
   return ctx.baseUrl + (ctx.upstream && ctx.upstream.kind === "new_api" ? "/doubao" : "");
+}
+
+function isAgentPlanImageModel(ctx) {
+  // A mapped upstream model takes precedence: administrators can still map
+  // the dotted client alias to a standard Ark endpoint ID explicitly.
+  const upstreamModel = trimmed(ctx && ctx.upstreamModel);
+  if (upstreamModel) return AGENT_PLAN_IMAGE_MODELS.includes(upstreamModel);
+  return imageModelCandidates(ctx).some((model) => AGENT_PLAN_IMAGE_MODELS.includes(model));
+}
+
+// Agent Plan uses the same host and Bearer API key as Ark, but its REST path
+// is /api/plan/v3 rather than /api/v3. A channel Base URL ending in /api/plan
+// is also accepted so administrators can select the plan path without using a
+// model-specific alias. New API upstreams always use the gateway's native path.
+function imageGenerationsURL(ctx) {
+  if (ctx && ctx.upstream && ctx.upstream.kind === "new_api") return apiRoot(ctx) + "/api/v3/images/generations";
+  const base = trimmed(ctx && ctx.baseUrl).replace(/\/+$/, "");
+  if (/\/api\/plan\/v3\/images\/generations$/i.test(base)) return base;
+  if (/\/api\/plan\/v3$/i.test(base)) return base + "/images/generations";
+  if (/\/api\/plan$/i.test(base)) return base + "/v3/images/generations";
+  const root = base
+    .replace(/\/api\/v3\/images\/generations$/i, "")
+    .replace(/\/api\/v3$/i, "")
+    .replace(/\/api$/i, "");
+  if (isAgentPlanImageModel(ctx)) return root + "/api/plan/v3/images/generations";
+  return root + "/api/v3/images/generations";
 }
 
 function objectValue(value, name) {
@@ -790,7 +826,7 @@ export function buildSubmitRequest(ctx) {
   if (imageTask(ctx)) {
     const converted = convertImage(ctx);
     return {
-      url: apiRoot(ctx) + "/api/v3/images/generations",
+      url: imageGenerationsURL(ctx),
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json", Authorization: "Bearer " + ctx.apiKey },
       body: converted.body,

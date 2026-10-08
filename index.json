@@ -797,7 +797,9 @@
             "doubao-seedream-5-0-lite-260128",
             "doubao-seedream-5-0-260128",
             "doubao-seedream-4-5-251128",
-            "doubao-seedream-4-0-250828"
+            "doubao-seedream-4-0-250828",
+            "doubao-seedream-5-0-pro",
+            "doubao-seedream-5.0-pro"
           ]
         }
       ],
@@ -1336,7 +1338,9 @@
         {
           "models": [
             "doubao-seedream-5-0-pro-260628",
-            "doubao-seedream-5-0-flash-260915"
+            "doubao-seedream-5-0-flash-260915",
+            "doubao-seedream-5-0-pro",
+            "doubao-seedream-5.0-pro"
           ],
           "schema": {
             "images_above_1_5k": {
@@ -1597,14 +1601,16 @@
         "doubao-seedream-5-0-lite-260128",
         "doubao-seedream-5-0-260128",
         "doubao-seedream-4-5-251128",
-        "doubao-seedream-4-0-250828"
+        "doubao-seedream-4-0-250828",
+        "doubao-seedream-5-0-pro",
+        "doubao-seedream-5.0-pro"
       ],
       "latest": "1.2.1",
       "versions": [
         {
           "version": "1.2.1",
           "path": "plugins/tasks/doubao/1.2.1/plugin.js",
-          "sha256": "c6a4bf535f1506f10ac7e174155504435514e834c11becdc457ce5422b6dd98f",
+          "sha256": "419d83e79be62547433eaef5739952a8ed9cb9535e68cc555a2b2804c73d9046",
           "minApiVersion": 1,
           "kind": "task"
         },
